@@ -30,7 +30,8 @@ COPY --chown=node:node --from=builder /app /app
 ENV PORT=3000
 ENV UPLOAD_DIR=/app/uploads
 
-# 2. Volume Creation
+# 2. Ensure /app/uploads exists with correct ownership and permissions before volume creation
+RUN chown -R node:node /app/uploads && chmod 775 /app/uploads
 
 VOLUME ["/app/uploads"]
 
