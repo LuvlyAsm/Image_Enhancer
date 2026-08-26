@@ -25,13 +25,14 @@ LABEL description="Image Enhancer API - real image processing with sharp"
 WORKDIR /app
 
 # 1. Copy files and set ownership directly to 'node'
-COPY --chown=node:node --from=builder /app /app
+COPY --from=builder /app /app
 
 ENV PORT=3000
 ENV UPLOAD_DIR=/app/uploads
 
 # 2. Ensure /app/uploads exists with correct ownership and permissions before volume creation
-RUN chown -R node:node /app/uploads && chmod 775 /app/uploads
+
+RUN mkdir -p /app/uploads && chown -R node:node /app/uploads && chmod 775 /app/uploads
 
 VOLUME ["/app/uploads"]
 
